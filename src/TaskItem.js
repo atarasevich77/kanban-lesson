@@ -4,12 +4,12 @@ const TaskItem = (props) => {
 
     const [task, setTask] = useState(props.task);
 
-    const onPriorityUp = (task) =>{
+    const onPriorityUp = (task) => {
         setTask({...task, priority: --task.priority});
         props.updateTask(task);
     }
 
-    const onPriorityDown = (task) =>{
+    const onPriorityDown = (task) => {
         setTask({...task, priority: ++task.priority});
         props.updateTask(task);
     }

@@ -28,15 +28,15 @@ const initStatuses = [
 ]
 //Many-to-one relation (many tasks to one status)
 const initTasks = [
-    {id: 1, name: 'Create F1.1', priority: 1, statusId: 1},
-    {id: 2, name: 'Create F2.1', priority: 1, statusId: 2},
-    {id: 3, name: 'Create F2.2', priority: 2, statusId: 2},
-    {id: 4, name: 'Create F3.3', priority: 3, statusId: 3},
-    {id: 5, name: 'Create F3.2', priority: 2, statusId: 3},
-    {id: 6, name: 'Create F3.1', priority: 1, statusId: 3},
-    {id: 7, name: 'Create F1.3', priority: 3, statusId: 1},
-    {id: 8, name: 'Create F1.2', priority: 2, statusId: 1},
-    {id: 9, name: 'Create F4', priority: 1, statusId: 4}
+    {id: 1, name: 'Aaa aaa aaa', priority: 1, statusId: 1},
+    {id: 2, name: 'Bbb bbb bbb', priority: 1, statusId: 2},
+    {id: 3, name: 'Ccc ccc ccc', priority: 2, statusId: 2},
+    {id: 4, name: 'Ddd ddd ddd', priority: 3, statusId: 3},
+    {id: 5, name: 'Eee eee eee', priority: 2, statusId: 3},
+    {id: 6, name: 'Fff fff fff', priority: 1, statusId: 3},
+    {id: 7, name: 'Ggg ggg ggd', priority: 3, statusId: 1},
+    {id: 8, name: 'Iii iii iii', priority: 2, statusId: 1},
+    {id: 9, name: 'Kkk kkk kkk', priority: 1, statusId: 4}
 ];
 
 function App() {
