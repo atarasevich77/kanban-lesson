@@ -15,6 +15,7 @@ const StatusesItem = (props) => {
                                            initStatuses={props.initStatuses}
                                            task={task}
                                            updateTask={props.updateTask}
+                                           deleteTask={props.deleteTask}
                                 />
                             );
                     })

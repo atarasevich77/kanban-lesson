@@ -83,6 +83,11 @@ function App() {
         setTasks(updatedTasks);
     }
 
+    const deleteTask = (task) => {
+        const newTasks = tasks.filter(obj => obj.id !== task.id);
+        setTasks(newTasks);
+    }
+
     return (
         <div>
 
@@ -117,6 +122,7 @@ function App() {
                                           initStatuses={initStatuses}
                                           tasks={tasks}
                                           updateTask={updateTask}
+                                          deleteTask={deleteTask}
                             />
                         )
                 }

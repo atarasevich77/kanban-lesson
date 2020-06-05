@@ -27,6 +27,10 @@ const TasksItem = (props) => {
         // setShow("");
     }
 
+    const onDeleteTask = () => {
+        props.deleteTask(task);
+    }
+
     // const onToggleDropdown = (e) => {
     //     e.preventDefault();
     //     setShow(!show ? " show" : "");
@@ -35,11 +39,13 @@ const TasksItem = (props) => {
     return (
         <div className="card m-1">
             <div className="card-body">
+                <button type="button" className="close text-right" onClick={onDeleteTask} aria-label="Delete">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <h5 className="card-title">{title}</h5>
-                <p className="card-text">
+                <p className="card-text p-1">
                     {task.name}
                 </p>
-
                 <div className="input-group input-group-sm mb-2 mt-2">
                     <div className="input-group-prepend">
                         <label className="input-group-text" htmlFor="inputGroupSelect01">Status:</label>
@@ -52,7 +58,6 @@ const TasksItem = (props) => {
                         }
                     </select>
                 </div>
-
                 <div className="btn-group-vertical btn-group-sm" aria-label={"Priority: " + task.priority}>
                     Priority: {task.priority}
                     {
@@ -64,7 +69,6 @@ const TasksItem = (props) => {
                         <button className="btn btn-secondary" onClick={onPriorityDown} type="button">Down</button>
                     }
                 </div>
-
                 {/*This bootstrap dropdown doesn't work */}
                 {/*<div className="dropdown">*/}
                 {/*    <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton"*/}
@@ -85,7 +89,6 @@ const TasksItem = (props) => {
                 {/*        }*/}
                 {/*    </div>*/}
                 {/*</div>*/}
-
             </div>
         </div>
     );
