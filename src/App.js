@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import TaskItem from "./TaskItem";
+import TasksItem from "./StatusesItem";
+import StatusesItem from "./StatusesItem";
 
 //not so good variant
 // const tasks1 = {
@@ -97,7 +98,7 @@ function App() {
                     <form>
                         <div className="form-group p-1">
                             <label htmlFor="exampleInputEmail1">Task</label>
-                            <input type="text" className="form-control" placeholder="Enter Task"
+                            <input type="text" className="form-control" placeholder="Describe Your Task"
                                 value={taskName} onChange={onTaskChange}/>
                         </div>
                         <button type="submit" className="btn btn-primary m-1"
@@ -112,22 +113,12 @@ function App() {
                     initStatuses
                         .sort((a, b) => { return a.queue - b.queue} )
                         .map(el =>
-                            <div key={el.id} className="col-sm-3 p-1">
-                                <h5 className="card-header text-center">{el.name}</h5>
-                                {
-                                    tasks
-                                        .sort((a, b) => { return a.priority - b.priority} )
-                                        .map(task => {
-                                            if(task.statusId === el.id)
-                                                return (
-                                                        <TaskItem key={task.id}
-                                                                  task={task}
-                                                                  updateTask={updateTask}
-                                                        />
-                                                    );
-                                        })
-                                }
-                            </div>
+                            <StatusesItem key={el.id}
+                                          status={el}
+                                          initStatuses={initStatuses}
+                                          tasks={tasks}
+                                          updateTask={updateTask}
+                            />
                         )
                 }
                 </div>
