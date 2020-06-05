@@ -5,6 +5,8 @@ const TasksItem = (props) => {
     const [task, setTask] = useState(props.task);
     // const [show, setShow] = useState("");
 
+    const title = task.name.substr(0, 3) + "...";
+
     const onPriorityUp = () => {
         const updatedTask = {...task, priority: --task.priority};
         setTask(updatedTask);
@@ -33,7 +35,7 @@ const TasksItem = (props) => {
     return (
         <div className="card m-1">
             <div className="card-body">
-                <h5 className="card-title">Card title</h5>
+                <h5 className="card-title">{title}</h5>
                 <p className="card-text">
                     {task.name}
                 </p>
