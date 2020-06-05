@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import TasksItem from "./StatusesItem";
-import StatusesItem from "./StatusesItem";
+import StatusesItem from "./components/Statuses/StatusesItem";
 
 //not so good variant
 // const tasks1 = {

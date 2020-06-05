@@ -1,5 +1,5 @@
 import React from 'react';
-import TasksItem from "./TasksItem";
+import TasksItem from "../Tasks/TasksItem";
 
 const StatusesItem = (props) => {
     return (
