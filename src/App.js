@@ -57,7 +57,7 @@ function App() {
         const newTask = {
             id: lastTaskId + 1,
             name: taskName,
-            priority: 10,
+            priority: 1,
             statusId: 1
 
         };
