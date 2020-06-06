@@ -2,25 +2,6 @@ import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import StatusesItem from "./components/Statuses/StatusesItem";
 
-//not so good variant
-// const tasks1 = {
-//     todo: [
-//         {name: 'Create F1', priority: 1},
-//         {name: 'Create F2', priority: 1}
-//         ],
-//     progress: [],
-//     review: [],
-//     done: []
-// };
-
-//good variant
-// const statuses = {
-//     s1: {name: 'To Do'},
-//     s2: {name: 'In Progress'},
-//     s3: {name: 'Review'},
-//     s4: {name: 'Done'},
-// }
-
 const statuses = [
     {id: 1, queue: 1, name: 'To Do'},
     {id: 2, queue: 2, name: 'In Progress'},
