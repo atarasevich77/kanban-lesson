@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.js": "/kanban-lesson/static/js/main.e4a98a85.chunk.js",
-    "main.js.map": "/kanban-lesson/static/js/main.e4a98a85.chunk.js.map",
-    "runtime-main.js": "/kanban-lesson/static/js/runtime-main.c0c8e010.js",
-    "runtime-main.js.map": "/kanban-lesson/static/js/runtime-main.c0c8e010.js.map",
+    "main.js": "/kanban-lesson/static/js/main.41cc7a6b.chunk.js",
+    "main.js.map": "/kanban-lesson/static/js/main.41cc7a6b.chunk.js.map",
+    "runtime-main.js": "/kanban-lesson/static/js/runtime-main.cc18f484.js",
+    "runtime-main.js.map": "/kanban-lesson/static/js/runtime-main.cc18f484.js.map",
     "static/css/2.af3c1da9.chunk.css": "/kanban-lesson/static/css/2.af3c1da9.chunk.css",
-    "static/js/2.cdda7252.chunk.js": "/kanban-lesson/static/js/2.cdda7252.chunk.js",
-    "static/js/2.cdda7252.chunk.js.map": "/kanban-lesson/static/js/2.cdda7252.chunk.js.map",
+    "static/js/2.9359a849.chunk.js": "/kanban-lesson/static/js/2.9359a849.chunk.js",
+    "static/js/2.9359a849.chunk.js.map": "/kanban-lesson/static/js/2.9359a849.chunk.js.map",
     "index.html": "/kanban-lesson/index.html",
-    "precache-manifest.498067929d17f716ba48ebf765d38538.js": "/kanban-lesson/precache-manifest.498067929d17f716ba48ebf765d38538.js",
+    "precache-manifest.efb8c8f4c303ee4f3ca98f1f1ed32479.js": "/kanban-lesson/precache-manifest.efb8c8f4c303ee4f3ca98f1f1ed32479.js",
     "service-worker.js": "/kanban-lesson/service-worker.js",
     "static/css/2.af3c1da9.chunk.css.map": "/kanban-lesson/static/css/2.af3c1da9.chunk.css.map",
-    "static/js/2.cdda7252.chunk.js.LICENSE.txt": "/kanban-lesson/static/js/2.cdda7252.chunk.js.LICENSE.txt"
+    "static/js/2.9359a849.chunk.js.LICENSE.txt": "/kanban-lesson/static/js/2.9359a849.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.c0c8e010.js",
+    "static/js/runtime-main.cc18f484.js",
     "static/css/2.af3c1da9.chunk.css",
-    "static/js/2.cdda7252.chunk.js",
-    "static/js/main.e4a98a85.chunk.js"
+    "static/js/2.9359a849.chunk.js",
+    "static/js/main.41cc7a6b.chunk.js"
   ]
 }
