@@ -31,7 +31,6 @@ const initTasks = [
 function App() {
 
     const [tasks, setTasks] = useState(initTasks);
-    const [lastTaskId, setLastTaskId] = useState(9);
     const [isOpenCreateTaskForm, setIsOpenCreateTaskForm] = useState(false);
     const [isActiveButtonTaskCreate, setIsActiveButtonTaskCreate] = useState(false);
     const [taskName, setTaskName] = useState('');
@@ -46,13 +45,12 @@ function App() {
     const taskCreate = (e) => {
         e.preventDefault();
         const newTask = {
-            id: lastTaskId + 1,
+            id: uuidv4(),
             name: taskName,
             priorityId: +priority,
             statusId: 1
 
         };
-        setLastTaskId(newTask.id);
         setTasks([...tasks, newTask]);
         taskReset();
     }
