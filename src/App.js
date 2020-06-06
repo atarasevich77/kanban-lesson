@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import StatusesItem from "./components/Statuses/StatusesItem";
 
 //not so good variant
@@ -20,23 +21,30 @@ import StatusesItem from "./components/Statuses/StatusesItem";
 //     s4: {name: 'Done'},
 // }
 
-const initStatuses = [
+const statuses = [
     {id: 1, queue: 1, name: 'To Do'},
     {id: 2, queue: 2, name: 'In Progress'},
     {id: 3, queue: 3, name: 'Review'},
     {id: 4, queue: 4, name: 'Done'}
 ]
-//Many-to-one relation (many tasks to one status)
+
+const priorities = [
+    {id: 1, priority: 'High Priority'},
+    {id: 2, priority: 'Medium Priority'},
+    {id: 3, priority: 'Low Priority'}
+]
+
+//Many-to-one relation (many tasks to one status, and many tasks to one priority)
 const initTasks = [
-    {id: 1, name: 'Aaa aaa aaa', priority: 1, statusId: 1},
-    {id: 2, name: 'Bbb bbb bbb', priority: 1, statusId: 2},
-    {id: 3, name: 'Ccc ccc ccc', priority: 2, statusId: 2},
-    {id: 4, name: 'Ddd ddd ddd', priority: 3, statusId: 3},
-    {id: 5, name: 'Eee eee eee', priority: 2, statusId: 3},
-    {id: 6, name: 'Fff fff fff', priority: 1, statusId: 3},
-    {id: 7, name: 'Ggg ggg ggd', priority: 3, statusId: 1},
-    {id: 8, name: 'Iii iii iii', priority: 2, statusId: 1},
-    {id: 9, name: 'Kkk kkk kkk', priority: 1, statusId: 4}
+    {id: uuidv4(), name: 'Which one?\n' + 'In my opinion, Faker is the best among them. The only time this package won’t solve your needs is when you need fake data in some rare format or data type. Even then, I’d still recommend using Faker and reshaping what it generates, if possible.', priorityId: 1, statusId: 1},
+    {id: uuidv4(), name: 'Generating Users\n' + 'Now for the good stuff! Generating 1000 fake user profiles is this easy (in bold is the Faker code, the rest is Pandas).', priorityId: 2, statusId: 2},
+    {id: uuidv4(), name: 'Again, there are way more fields available, you can find them all in the documentation. You can even make your own data providers, here’s a few already contributed by the community.', priorityId: 3, statusId: 2},
+    {id: uuidv4(), name: 'Faker also supports multiple languages, running via the command line, and seeding the randomizer to get consistent results.', priorityId: 1, statusId: 3},
+    {id: uuidv4(), name: 'Hopefully, this saves you some time! I use Faker to generate data for stress tests, speed tests, and even test model pipelines for errors.', priorityId: 2, statusId: 3},
+    {id: uuidv4(), name: 'Fill form input fields with fake random data.\n' + 'After installation you will have to reload the tabs that are already open for the extension to work properly inside them', priorityId: 3, statusId: 3},
+    {id: uuidv4(), name: 'Generate random names, emails, addresses, phone numbers and many more types of data.', priorityId: 2, statusId: 1},
+    {id: uuidv4(), name: 'No configuration or initial setup required, unless you want to. Just right click on any input field and choose what type of data to insert.', priorityId: 3, statusId: 1},
+    {id: uuidv4(), name: 'Fill single fields or entire form at once.', priorityId: 1, statusId: 4}
 ];
 
 function App() {
@@ -46,6 +54,8 @@ function App() {
     const [isOpenCreateTaskForm, setIsOpenCreateTaskForm] = useState(false);
     const [isActiveButtonTaskCreate, setIsActiveButtonTaskCreate] = useState(false);
     const [taskName, setTaskName] = useState('');
+    const [priority, setPriority] = useState(priorities[priorities.length - 1].id);
+
 
     const onTaskChange = (e) => {
         setIsActiveButtonTaskCreate(e.target.value.length > 4);
@@ -57,7 +67,7 @@ function App() {
         const newTask = {
             id: lastTaskId + 1,
             name: taskName,
-            priority: 1,
+            priorityId: priority,
             statusId: 1
 
         };
@@ -68,6 +78,7 @@ function App() {
 
     const taskReset = (e) => {
         setTaskName('');
+        setPriority(priorities[priorities.length - 1].id);
         setIsOpenCreateTaskForm(false);
         setIsActiveButtonTaskCreate(false);
     }
@@ -75,7 +86,7 @@ function App() {
     const updateTask = (task) => {
         const updatedTasks = tasks.map(obj => {
             if(obj.id === task.id){
-                return {...obj, name: task.name, priority: task.priority, statusId: task.statusId};
+                return {...obj, name: task.name, priorityId: task.priority, statusId: task.statusId};
             } else {
                 return obj;
             }
@@ -113,6 +124,20 @@ function App() {
                             <input type="text" className="form-control" placeholder="Describe Your Task"
                                 value={taskName} onChange={onTaskChange}/>
                         </div>
+
+                        <div className="input-group input-group-sm mb-2 mt-2">
+                            <div className="input-group-prepend">
+                                <label className="input-group-text" htmlFor="inputGroupSelect01">Priority:</label>
+                            </div>
+                            <select className="custom-select" id="inputGroupSelect01" defaultValue={priority} onChange={(e) => setPriority(e.target.value)}>
+                                {
+                                    priorities.map(el => {
+                                        return <option key={el.id} value={el.id}>{el.priority}</option>
+                                    })
+                                }
+                            </select>
+                        </div>
+
                         <button type="submit" className="btn btn-primary m-1"
                                 onClick={taskCreate}
                                 disabled={!isActiveButtonTaskCreate}
@@ -122,12 +147,13 @@ function App() {
                 }
                 <div className="row">
                 {
-                    initStatuses
+                    statuses
                         .sort((a, b) => { return a.queue - b.queue} )
                         .map(el =>
                             <StatusesItem key={el.id}
                                           status={el}
-                                          initStatuses={initStatuses}
+                                          statuses={statuses}
+                                          priorities={priorities}
                                           tasks={tasks}
                                           updateTask={updateTask}
                                           deleteTask={deleteTask}
