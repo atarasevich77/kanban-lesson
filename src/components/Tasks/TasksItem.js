@@ -32,12 +32,6 @@ const TasksItem = (props) => {
         props.updateTask(updatedTask);
     }
 
-    const onStatusChange = (e) => {
-        const updatedTask = {...task, statusId: +e.target.value};
-        setTask(updatedTask);
-        props.updateTask(updatedTask);
-    }
-
     const onDeleteTask = () => {
         props.deleteTask(task);
     }
@@ -49,16 +43,24 @@ const TasksItem = (props) => {
         ...draggableStyle
     });
 
-    const stylePlus = {
-        pointerEvents: task.priorityId > 1 ? '' : 'none',
-        cursor: task.priorityId > 1 ? '' : 'not-allowed',
-        opacity: task.priorityId > 1 ? 1 : 0.2
+    const showDeleteMode = (e) => {
+        e.preventDefault();
     }
-    const styleDash = {
-        pointerEvents: task.priorityId < 3 ? '' : 'none',
-        cursor: task.priorityId < 3 ? '' : 'not-allowed',
-        opacity: task.priorityId < 3 ? 1 : 0.2
+
+    const showEditMode = (e) => {
+        e.preventDefault();
     }
+
+    // const stylePlus = {
+    //     pointerEvents: task.priorityId > 1 ? '' : 'none',
+    //     cursor: task.priorityId > 1 ? '' : 'not-allowed',
+    //     opacity: task.priorityId > 1 ? 1 : 0.2
+    // }
+    // const styleDash = {
+    //     pointerEvents: task.priorityId < 3 ? '' : 'none',
+    //     cursor: task.priorityId < 3 ? '' : 'not-allowed',
+    //     opacity: task.priorityId < 3 ? 1 : 0.2
+    // }
 
 
     return (
@@ -74,9 +76,9 @@ const TasksItem = (props) => {
                             provided.draggableProps.style
                         )}
                     >
-                        <div className="d-flex">
+                        <div className="d-flex ml-auto">
                             <div className="card-text p-1">
-                                <a className="mr-1" href="#" onClick={onPriorityDown} style={styleDash}>{iconDash}</a>
+                                {/*<a className="mr-1" href="#" onClick={onPriorityDown} style={styleDash}>{iconDash}</a>*/}
                                 {priorityString === 'High Priority' &&
                                     <span className="badge badge-danger">{priorityString}</span>
                                 }
@@ -86,30 +88,36 @@ const TasksItem = (props) => {
                                 {priorityString === 'Low Priority' &&
                                     <span className="badge badge-success">{priorityString}</span>
                                 }
-                                <a className="ml-1" href="#" onClick={onPriorityUp} style={stylePlus}>{iconPlus}</a>
-                            </div>
-                            <div className="ml-auto p-1">
-                                <button type="button" className="close text-right" onClick={onDeleteTask} aria-label="Delete">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                {/*<a className="ml-1" href="#" onClick={onPriorityUp} style={stylePlus}>{iconPlus}</a>*/}
                             </div>
                         </div>
                         <div className="card-body p-2">
                             <div className="card-text p-1">
                                 {task.name}
                             </div>
-                            {/*<div className="input-group input-group-sm mb-2 mt-2">*/}
-                            {/*    <div className="input-group-prepend">*/}
-                            {/*        <label className="input-group-text" htmlFor="inputGroupSelect01">Status:</label>*/}
-                            {/*    </div>*/}
-                            {/*    <select className="custom-select" id="inputGroupSelect01" defaultValue={task.statusId} onChange={onStatusChange}>*/}
-                            {/*        {*/}
-                            {/*            props.statuses.map(el => {*/}
-                            {/*                return <option key={el.id} value={el.id}>{el.name}</option>*/}
-                            {/*            })*/}
-                            {/*        }*/}
-                            {/*    </select>*/}
-                            {/*</div>*/}
+                        </div>
+                        <div className="card-footer d-flex">
+                            <a className="card-link" href="#" onClick={showEditMode}>Edit</a>
+                            <a className="card-link ml-auto" href="#" onClick={showDeleteMode}>Delete</a>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
             )}

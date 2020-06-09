@@ -83,17 +83,10 @@ function App() {
                 }
             })
         )
-        setData(data);
     }
 
     const deleteTask = (deletedTask) => {
-        data.map(el => {
-            const index = el.tasks.findIndex(n => n.id === deletedTask.id);
-            if (index !== -1) {
-                el.tasks.splice(index, 1);
-            }
-        })
-        setData(data);
+        console.log(deletedTask)
     }
 
     const onDragEnd = (result) => {
