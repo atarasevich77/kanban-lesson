@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import StatusesItem from "./components/Statuses/StatusesItem";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const statuses = [
-    {id: 1, queue: 1, name: 'To Do'},
-    {id: 2, queue: 2, name: 'In Progress'},
-    {id: 3, queue: 3, name: 'Review'},
-    {id: 4, queue: 4, name: 'Done'}
+    {id: 1, tasks: [], queue: 1, name: 'To Do'},
+    {id: 2, tasks: [], queue: 2, name: 'In Progress'},
+    {id: 3, tasks: [], queue: 3, name: 'Review'},
+    {id: 4, tasks: [], queue: 4, name: 'Done'}
 ]
 
 const priorities = [
@@ -28,14 +29,21 @@ const initTasks = [
     {id: uuidv4(), name: 'Fill single fields or entire form at once.', priorityId: 1, statusId: 4}
 ];
 
+statuses.map(status =>
+    initTasks.map(task => {
+        if(task.statusId === status.id){
+            status.tasks.push(task);
+        }
+    })
+);
+
 function App() {
 
-    const [tasks, setTasks] = useState(initTasks);
+    const [data, setData] = useState(statuses);
     const [isOpenCreateTaskForm, setIsOpenCreateTaskForm] = useState(false);
     const [isActiveButtonTaskCreate, setIsActiveButtonTaskCreate] = useState(false);
     const [taskName, setTaskName] = useState('');
     const [priority, setPriority] = useState(priorities[priorities.length - 1].id);
-
 
     const onTaskChange = (e) => {
         setIsActiveButtonTaskCreate(e.target.value.length > 4);
@@ -51,7 +59,12 @@ function App() {
             statusId: 1
 
         };
-        setTasks([...tasks, newTask]);
+        const data = statuses.map(status => {
+            if(newTask.statusId === status.id){
+                status.tasks.push(newTask);
+            }
+        });
+        setData(data);
         taskReset();
     }
 
@@ -62,29 +75,48 @@ function App() {
         setIsActiveButtonTaskCreate(false);
     }
 
-    const updateTask = (task) => {
-        const updatedTasks = tasks.map(obj => {
-            if(obj.id === task.id){
-                return {...obj, name: task.name, priorityId: task.priority, statusId: task.statusId};
-            } else {
-                return obj;
-            }
-        })
-        setTasks(updatedTasks);
+    const updateTask = (updatedTasks) => {
+        const updatedData = statuses.map(status =>
+            status.tasks.map(task => {
+                if(task.id === updatedTasks.id){
+                    return {...task, name: updatedTasks.name, priorityId: updatedTasks.priority, statusId: updatedTasks.statusId};
+                } else {
+                    return task;
+                }
+            })
+        )
+        setData(updatedData);
     }
 
-    const deleteTask = (task) => {
-        const newTasks = tasks.filter(obj => obj.id !== task.id);
-        setTasks(newTasks);
+    const deleteTask = (deletedTask) => {
+        const updatedData = statuses.map(status =>
+            status.tasks.filter(task => deletedTask.id !== task.id)
+        )
+        setData(updatedData);
     }
 
-    const reorder = (list, startIndex, endIndex) => {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
+    const onDragEnd = (result) => {
+        const {source, destination} = result;
 
-        return result;
-    };
+        if (!destination) {
+            return;
+        }
+
+        if (source.droppableId === destination.droppableId) {
+            const [removed] = data[source.droppableId - 1].tasks.splice(source.index, 1);
+            data[source.droppableId - 1].tasks.splice(destination.index, 0, removed);
+        } else {
+
+            const [removed] = data[source.droppableId - 1].tasks.splice(source.index, 1);
+            data[destination.droppableId - 1].tasks.splice(destination.index, 0, removed);
+            data.map((el, idx) =>
+                el.tasks.map(task =>
+                    task.id === removed.id ? task.statusId = idx + 1 : ''
+                )
+            );
+        }
+        setData(data);
+    }
 
     return (
         <div>
@@ -125,22 +157,21 @@ function App() {
                     </form>
                 }
                 <div className="row">
-                {
-                    statuses
-                        .sort((a, b) => { return a.queue - b.queue} )
-                        .map(el =>
-                            <StatusesItem key={el.id}
-                                          status={el}
-                                          statuses={statuses}
-                                          priorities={priorities}
-                                          tasks={tasks}
-                                          updateTask={updateTask}
-                                          deleteTask={deleteTask}
-                                          reorder={reorder}
-                                          setTasks={setTasks}
-                            />
-                        )
-                }
+                    <DragDropContext onDragEnd={onDragEnd}>
+                    {
+                        statuses
+                            .sort((a, b) => { return a.queue - b.queue} )
+                            .map(el =>
+                                <StatusesItem key={el.id}
+                                              status={el}
+                                              statuses={statuses}
+                                              priorities={priorities}
+                                              updateTask={updateTask}
+                                              deleteTask={deleteTask}
+                                />
+                            )
+                    }
+                    </DragDropContext>
                 </div>
             </div>
         </div>
