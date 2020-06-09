@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Draggable} from 'react-beautiful-dnd';
+import DeleteModal from "./DeleteModal";
 
 const iconPlus = (
     <svg className="bi bi-caret-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -16,6 +17,8 @@ const iconDash = (
 const TasksItem = (props) => {
 
     const [task, setTask] = useState(props.task);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
     const priorityString = props.priorities.find(el => el.id === task.priorityId).priority;
 
     const onPriorityUp = (e) => {
@@ -32,10 +35,6 @@ const TasksItem = (props) => {
         props.updateTask(updatedTask);
     }
 
-    const onDeleteTask = () => {
-        props.deleteTask(task);
-    }
-
     const getItemStyle = (isDragging, draggableStyle) => ({
         // change background colour if dragging
         background: isDragging ? "lightgrey" : "",
@@ -45,10 +44,13 @@ const TasksItem = (props) => {
 
     const showDeleteMode = (e) => {
         e.preventDefault();
+        setShowDeleteModal(true);
+        document.body.classList.add('modal-open');
     }
 
     const showEditMode = (e) => {
         e.preventDefault();
+        setShowEditModal(true);
     }
 
     // const stylePlus = {
@@ -98,27 +100,14 @@ const TasksItem = (props) => {
                         </div>
                         <div className="card-footer d-flex">
                             <a className="card-link" href="#" onClick={showEditMode}>Edit</a>
-                            <a className="card-link ml-auto" href="#" onClick={showDeleteMode}>Delete</a>
+                            <a className="card-link ml-auto" href="#" onClick={showDeleteMode} data-toggle="modal" data-target="#deleteModal">Delete</a>
                         </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {showDeleteModal &&
+                            <DeleteModal task={task}
+                                         deleteTask={props.deleteTask}
+                                         setShowDeleteModal={setShowDeleteModal}/>
+                        }
+
                     </div>
             )}
         </Draggable>

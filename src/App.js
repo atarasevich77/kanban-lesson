@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import StatusesItem from "./components/Statuses/StatusesItem";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -86,7 +86,14 @@ function App() {
     }
 
     const deleteTask = (deletedTask) => {
-        console.log(deletedTask)
+        const updateData = [...data];
+        updateData.forEach(obj => {
+            const index = obj.tasks.findIndex(idx => idx.id === deletedTask.id);
+            if (index !== -1) {
+                obj.tasks.splice(index, 1);
+            }
+        });
+        setData(updateData);
     }
 
     const onDragEnd = (result) => {
@@ -114,9 +121,8 @@ function App() {
 
     return (
         <div>
-
-            <div className="container">
-                <h1>Kanban</h1>
+            <div className="container pt-2">
+                <h1 className="display-4">Kanban Board</h1>
                 {
                     !isOpenCreateTaskForm &&
                     <button className="btn btn-primary p-1" onClick={e => setIsOpenCreateTaskForm(true)}>Create task</button>
@@ -127,7 +133,7 @@ function App() {
                         <div className="form-group p-1">
                             <label htmlFor="exampleInputEmail1">Task</label>
                             <input type="text" className="form-control" placeholder="Describe Your Task"
-                                value={taskName} onChange={onTaskChange}/>
+                                   value={taskName} onChange={onTaskChange}/>
                         </div>
 
                         <div className="input-group input-group-sm mb-2 mt-2">
