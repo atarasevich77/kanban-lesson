@@ -4,6 +4,8 @@ import { Droppable } from 'react-beautiful-dnd';
 
 const StatusesItem = (props) => {
 
+    const status = props.status;
+
     const getStatusStyle = (isDraggingOver) => ({
         background: isDraggingOver ? '#f7f7f7' : '',
     });
@@ -15,12 +17,12 @@ const StatusesItem = (props) => {
                      ref={provided.innerRef}
                      style={getStatusStyle(snapshot.isDraggingOver)}
                 >
-                <h5 className="card-header text-center">{props.status.name}</h5>
+                <h5 className="card-header text-center">{status.name} {status.tasks.length > 0 ? status.tasks.length : ''}</h5>
                 {
-                    props.status.tasks
+                    status.tasks
                         // .sort((a, b) => { return a.priorityId - b.priorityId} )
                         .map((task, index) => {
-                            if(task.statusId === props.status.id)
+                            if(task.statusId === status.id)
                                 return (
                                     <TasksItem key={task.id}
                                                index={index}
