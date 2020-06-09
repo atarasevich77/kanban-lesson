@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import StatusesItem from "./components/Statuses/StatusesItem";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -57,14 +57,12 @@ function App() {
             name: taskName,
             priorityId: +priority,
             statusId: 1
-
         };
-        const data = statuses.map(status => {
+        data.map(status => {
             if(newTask.statusId === status.id){
                 status.tasks.push(newTask);
             }
         });
-        setData(data);
         taskReset();
     }
 
@@ -75,24 +73,27 @@ function App() {
         setIsActiveButtonTaskCreate(false);
     }
 
-    const updateTask = (updatedTasks) => {
-        const updatedData = statuses.map(status =>
+    const updateTask = (updatedTask) => {
+        data.map(status =>
             status.tasks.map(task => {
-                if(task.id === updatedTasks.id){
-                    return {...task, name: updatedTasks.name, priorityId: updatedTasks.priority, statusId: updatedTasks.statusId};
-                } else {
-                    return task;
+                if(task.id === updatedTask.id){
+                    task.name = updatedTask.name;
+                    task.priorityId = updatedTask.priorityId;
+                    task.statusId = updatedTask.statusId;
                 }
             })
         )
-        setData(updatedData);
+        setData(data);
     }
 
     const deleteTask = (deletedTask) => {
-        const updatedData = statuses.map(status =>
-            status.tasks.filter(task => deletedTask.id !== task.id)
-        )
-        setData(updatedData);
+        data.map(el => {
+            const index = el.tasks.findIndex(n => n.id === deletedTask.id);
+            if (index !== -1) {
+                el.tasks.splice(index, 1);
+            }
+        })
+        setData(data);
     }
 
     const onDragEnd = (result) => {
@@ -159,7 +160,7 @@ function App() {
                 <div className="row">
                     <DragDropContext onDragEnd={onDragEnd}>
                     {
-                        statuses
+                        data
                             .sort((a, b) => { return a.queue - b.queue} )
                             .map(el =>
                                 <StatusesItem key={el.id}
