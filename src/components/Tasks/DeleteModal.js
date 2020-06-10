@@ -7,6 +7,7 @@ const DeleteModal = (props) => {
     const getModalStyle = {
         paddingRight: '17px',
         display: show ? 'block' : 'none',
+        cursor: 'default'
     }
 
     const onClose = () => {
@@ -21,7 +22,7 @@ const DeleteModal = (props) => {
     }
 
     return (
-        <div className={"modal fade " + show} tabIndex="-1" role="dialog" aria-hidden={true} style={getModalStyle}>
+        <div className={"modal fade " + show} id="deleteModal" tabIndex="-1" role="dialog" aria-hidden={true} style={getModalStyle}>
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
