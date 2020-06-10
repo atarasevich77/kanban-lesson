@@ -13,9 +13,11 @@ const iconDash = (
 
 const EditModal = (props) => {
 
-    const [task, setTask] = useState(props.task);
+    const task = props.task;
+    const [name, setName] = useState(task.name);
+    let [priorityId, setPriorityId] = useState(task.priorityId);
     const [show, setShow] = useState('show');
-    const priorityString = props.priorities.find(el => el.id === task.priorityId).priority;
+    const priorityString = props.priorities.find(el => el.id === priorityId).priority;
 
     const getModalStyle = {
         paddingRight: '17px',
@@ -25,38 +27,36 @@ const EditModal = (props) => {
 
     const onClose = () => {
         setShow('');
+        setName('');
         props.setShowEditModal(false);
         document.body.classList.remove('modal-open');
     }
 
     const onPriorityUp = (e) => {
         e.preventDefault();
-        const updatedTask = {...task, priorityId: --task.priorityId};
-        setTask(updatedTask);
-        props.updateTask(updatedTask);
+        setPriorityId(--priorityId);
     }
 
     const onPriorityDown = (e) => {
         e.preventDefault();
-        const updatedTask = {...task, priorityId: ++task.priorityId}
-        setTask(updatedTask);
-        props.updateTask(updatedTask);
+        setPriorityId(++priorityId);
     }
 
     const onUpdateTask = () => {
-        props.updateTask(task);
+        const updatedTask = {...task, name: name, priorityId: priorityId};
+        props.updateTask(updatedTask);
         onClose();
     }
 
     const stylePlus = {
-        pointerEvents: task.priorityId > 1 ? '' : 'none',
-        cursor: task.priorityId > 1 ? '' : 'not-allowed',
-        opacity: task.priorityId > 1 ? 1 : 0.2
+        pointerEvents: priorityId > 1 ? '' : 'none',
+        cursor: priorityId > 1 ? '' : 'not-allowed',
+        opacity: priorityId > 1 ? 1 : 0.2
     }
     const styleDash = {
-        pointerEvents: task.priorityId < 3 ? '' : 'none',
-        cursor: task.priorityId < 3 ? '' : 'not-allowed',
-        opacity: task.priorityId < 3 ? 1 : 0.2
+        pointerEvents: priorityId < 3 ? '' : 'none',
+        cursor: priorityId < 3 ? '' : 'not-allowed',
+        opacity: priorityId < 3 ? 1 : 0.2
     }
 
     return (
@@ -71,22 +71,29 @@ const EditModal = (props) => {
                     </div>
                     <div className="modal-body">
                         <div className="d-flex ml-auto">
-                            <div className="card-text p-1">
+                            <div className="card-text p-2">
                                 <a className="mr-1" href="#" onClick={onPriorityDown} style={styleDash}>{iconDash}</a>
                                 {priorityString === 'High Priority' &&
-                                <span className="badge badge-danger">{priorityString}</span>
+                                    <span className="badge badge-danger">{priorityString}</span>
                                 }
                                 {priorityString === 'Medium Priority' &&
-                                <span className="badge badge-warning">{priorityString}</span>
+                                    <span className="badge badge-warning">{priorityString}</span>
                                 }
                                 {priorityString === 'Low Priority' &&
-                                <span className="badge badge-success">{priorityString}</span>
+                                    <span className="badge badge-success">{priorityString}</span>
                                 }
                                 <a className="ml-1" href="#" onClick={onPriorityUp} style={stylePlus}>{iconPlus}</a>
                             </div>
                         </div>
-                        <div className="d-flex p-2">
-
+                        <div className="d-flex">
+                            <div className="input-group">
+                                <textarea className="md-textarea form-control"
+                                          rows="3"
+                                          value={name}
+                                          onChange={(e) => setName(e.target.value)}
+                                          placeholder="Describe your task"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="modal-footer">

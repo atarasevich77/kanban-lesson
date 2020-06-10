@@ -25,6 +25,7 @@ const TasksItem = (props) => {
     const showEditMode = (e) => {
         e.preventDefault();
         setShowEditModal(true);
+        document.body.classList.add('modal-open');
     }
 
     return (
