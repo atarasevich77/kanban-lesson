@@ -66,13 +66,15 @@ const TasksItem = (props) => {
                         {showDeleteModal &&
                             <DeleteModal task={props.task}
                                          deleteTask={props.deleteTask}
-                                         setShowDeleteModal={setShowDeleteModal}/>
+                                         setShowDeleteModal={setShowDeleteModal}
+                            />
                         }
                         {showEditModal &&
-                        <EditModal task={props.task}
+                            <EditModal task={props.task}
                                    priorities={props.priorities}
                                    updateTask={props.updateTask}
-                                   setShowEditModal={setShowEditModal}/>
+                                   setShowEditModal={setShowEditModal}
+                            />
                         }
                     </div>
             )}

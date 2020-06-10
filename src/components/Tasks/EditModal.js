@@ -85,7 +85,7 @@ const EditModal = (props) => {
                                 <a className="ml-1" href="#" onClick={onPriorityUp} style={stylePlus}>{iconPlus}</a>
                             </div>
                         </div>
-                        <div className="d-flex">
+                        <div className="d-flex pt-1">
                             <div className="input-group">
                                 <textarea className="md-textarea form-control"
                                           rows="3"

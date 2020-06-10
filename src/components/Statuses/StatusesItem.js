@@ -26,7 +26,6 @@ const StatusesItem = (props) => {
                                 return (
                                     <TasksItem key={task.id}
                                                index={index}
-                                               statuses={props.statuses}
                                                priorities={props.priorities}
                                                task={task}
                                                updateTask={props.updateTask}
