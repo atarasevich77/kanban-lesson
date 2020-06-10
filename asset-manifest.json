@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.js": "/kanban-lesson/static/js/main.703a2f5f.chunk.js",
-    "main.js.map": "/kanban-lesson/static/js/main.703a2f5f.chunk.js.map",
+    "main.js": "/kanban-lesson/static/js/main.2ed6da92.chunk.js",
+    "main.js.map": "/kanban-lesson/static/js/main.2ed6da92.chunk.js.map",
     "runtime-main.js": "/kanban-lesson/static/js/runtime-main.cc18f484.js",
     "runtime-main.js.map": "/kanban-lesson/static/js/runtime-main.cc18f484.js.map",
     "static/css/2.af3c1da9.chunk.css": "/kanban-lesson/static/css/2.af3c1da9.chunk.css",
-    "static/js/2.a4bca580.chunk.js": "/kanban-lesson/static/js/2.a4bca580.chunk.js",
-    "static/js/2.a4bca580.chunk.js.map": "/kanban-lesson/static/js/2.a4bca580.chunk.js.map",
+    "static/js/2.42f4f09e.chunk.js": "/kanban-lesson/static/js/2.42f4f09e.chunk.js",
+    "static/js/2.42f4f09e.chunk.js.map": "/kanban-lesson/static/js/2.42f4f09e.chunk.js.map",
     "index.html": "/kanban-lesson/index.html",
-    "precache-manifest.ac695a14320b38086b91d92b1cdf4757.js": "/kanban-lesson/precache-manifest.ac695a14320b38086b91d92b1cdf4757.js",
+    "precache-manifest.8af40a2a7bd0088671f620fffcda9689.js": "/kanban-lesson/precache-manifest.8af40a2a7bd0088671f620fffcda9689.js",
     "service-worker.js": "/kanban-lesson/service-worker.js",
     "static/css/2.af3c1da9.chunk.css.map": "/kanban-lesson/static/css/2.af3c1da9.chunk.css.map",
-    "static/js/2.a4bca580.chunk.js.LICENSE.txt": "/kanban-lesson/static/js/2.a4bca580.chunk.js.LICENSE.txt"
+    "static/js/2.42f4f09e.chunk.js.LICENSE.txt": "/kanban-lesson/static/js/2.42f4f09e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cc18f484.js",
     "static/css/2.af3c1da9.chunk.css",
-    "static/js/2.a4bca580.chunk.js",
-    "static/js/main.703a2f5f.chunk.js"
+    "static/js/2.42f4f09e.chunk.js",
+    "static/js/main.2ed6da92.chunk.js"
   ]
 }
