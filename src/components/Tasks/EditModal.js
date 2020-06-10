@@ -18,15 +18,23 @@ const EditModal = (props) => {
     const [name, setName] = useState(task.name);
     let [priorityId, setPriorityId] = useState(task.priorityId);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [isActiveButtonTaskEdit, setIsActiveButtonTaskEdit] = useState(task.name.length > 4);
     const priorityString = props.priorities.find(el => el.id === priorityId).priority;
 
     const handleShowEditModal = () => {
         setShowEditModal(true);
     }
+
     const handleCloseEditModal = () => {
         setName(task.name);
         setPriorityId(task.priorityId);
+        setIsActiveButtonTaskEdit(task.name.length > 4);
         setShowEditModal(false);
+    }
+
+    const onTaskChange = (e) => {
+        setIsActiveButtonTaskEdit(e.target.value.length > 4);
+        setName(e.target.value);
     }
 
     const onPriorityUp = (e) => {
@@ -84,7 +92,7 @@ const EditModal = (props) => {
                                 <textarea className="md-textarea form-control"
                                           rows="3"
                                           value={name}
-                                          onChange={(e) => setName(e.target.value)}
+                                          onChange={onTaskChange}
                                           placeholder="Describe your task"
                                 />
                         </div>
@@ -94,7 +102,7 @@ const EditModal = (props) => {
                     <Button variant="secondary" onClick={handleCloseEditModal}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={onUpdateTask}>
+                    <Button variant="primary" onClick={onUpdateTask} disabled={!isActiveButtonTaskEdit}>
                         Update
                     </Button>
                 </Modal.Footer>
