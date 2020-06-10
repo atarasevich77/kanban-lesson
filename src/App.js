@@ -46,7 +46,8 @@ function App() {
     }
 
     const updateTask = (updatedTask) => {
-        data.map(status =>
+        const updateData = [...data];
+        updateData.forEach(status => {
             status.tasks.map(task => {
                 if(task.id === updatedTask.id){
                     task.name = updatedTask.name;
@@ -54,7 +55,8 @@ function App() {
                     task.statusId = updatedTask.statusId;
                 }
             })
-        )
+        });
+        setData(updateData);
     }
 
     const deleteTask = (deletedTask) => {

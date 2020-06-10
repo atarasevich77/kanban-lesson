@@ -5,8 +5,6 @@ import EditModal from "./EditModal";
 
 const TasksItem = (props) => {
 
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
     const priorityString = props.priorities.find(el => el.id === props.task.priorityId).priority;
 
     const getItemStyle = (isDragging, draggableStyle) => ({
@@ -15,18 +13,6 @@ const TasksItem = (props) => {
         // styles we need to apply on draggables
         ...draggableStyle
     });
-
-    const showDeleteMode = (e) => {
-        e.preventDefault();
-        setShowDeleteModal(true);
-        document.body.classList.add('modal-open');
-    }
-
-    const showEditMode = (e) => {
-        e.preventDefault();
-        setShowEditModal(true);
-        document.body.classList.add('modal-open');
-    }
 
     return (
         <Draggable draggableId={props.task.id.toString()} index={props.index}>
@@ -60,22 +46,14 @@ const TasksItem = (props) => {
                             </div>
                         </div>
                         <div className="card-footer d-flex">
-                            <a className="card-link" href="#" onClick={showEditMode} data-toggle="modal" data-target="#editModal">Edit</a>
-                            <a className="card-link ml-auto" href="#" onClick={showDeleteMode} data-toggle="modal" data-target="#deleteModal">Delete</a>
-                        </div>
-                        {showDeleteModal &&
+                            <EditModal task={props.task}
+                                       priorities={props.priorities}
+                                       updateTask={props.updateTask}
+                            />
                             <DeleteModal task={props.task}
                                          deleteTask={props.deleteTask}
-                                         setShowDeleteModal={setShowDeleteModal}
                             />
-                        }
-                        {showEditModal &&
-                            <EditModal task={props.task}
-                                   priorities={props.priorities}
-                                   updateTask={props.updateTask}
-                                   setShowEditModal={setShowEditModal}
-                            />
-                        }
+                        </div>
                     </div>
             )}
         </Draggable>

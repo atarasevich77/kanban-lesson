@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Button, Modal} from "react-bootstrap";
 
 const iconPlus = (
     <svg className="bi bi-caret-up" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -16,20 +17,16 @@ const EditModal = (props) => {
     const task = props.task;
     const [name, setName] = useState(task.name);
     let [priorityId, setPriorityId] = useState(task.priorityId);
-    const [show, setShow] = useState('show');
+    const [showEditModal, setShowEditModal] = useState(false);
     const priorityString = props.priorities.find(el => el.id === priorityId).priority;
 
-    const getModalStyle = {
-        paddingRight: '17px',
-        display: show ? 'block' : 'none',
-        cursor: 'default'
+    const handleShowEditModal = () => {
+        setShowEditModal(true);
     }
-
-    const onClose = () => {
-        setShow('');
-        setName('');
-        props.setShowEditModal(false);
-        document.body.classList.remove('modal-open');
+    const handleCloseEditModal = () => {
+        setName(task.name);
+        setPriorityId(task.priorityId);
+        setShowEditModal(false);
     }
 
     const onPriorityUp = (e) => {
@@ -45,7 +42,7 @@ const EditModal = (props) => {
     const onUpdateTask = () => {
         const updatedTask = {...task, name: name, priorityId: priorityId};
         props.updateTask(updatedTask);
-        onClose();
+        setShowEditModal(false);
     }
 
     const stylePlus = {
@@ -60,49 +57,49 @@ const EditModal = (props) => {
     }
 
     return (
-        <div className={"modal fade " + show} id="editModal" tabIndex="-1" role="dialog" aria-hidden={true} style={getModalStyle}>
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">Edit task</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onClose}>
-                            <span aria-hidden={true}>&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        <div className="d-flex ml-auto">
-                            <div className="card-text p-2">
-                                <a className="mr-1" href="#" onClick={onPriorityDown} style={styleDash}>{iconDash}</a>
-                                {priorityString === 'High Priority' &&
-                                    <span className="badge badge-danger">{priorityString}</span>
-                                }
-                                {priorityString === 'Medium Priority' &&
-                                    <span className="badge badge-warning">{priorityString}</span>
-                                }
-                                {priorityString === 'Low Priority' &&
-                                    <span className="badge badge-success">{priorityString}</span>
-                                }
-                                <a className="ml-1" href="#" onClick={onPriorityUp} style={stylePlus}>{iconPlus}</a>
-                            </div>
+        <>
+            <a className="card-link" href="#" onClick={handleShowEditModal}>Edit</a>
+            <Modal show={showEditModal} onHide={handleCloseEditModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Update task</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="d-flex ml-auto">
+                        <div className="card-text p-2">
+                            <a className="mr-1" href="#" onClick={onPriorityDown} style={styleDash}>{iconDash}</a>
+                            {priorityString === 'High Priority' &&
+                            <span className="badge badge-danger">{priorityString}</span>
+                            }
+                            {priorityString === 'Medium Priority' &&
+                            <span className="badge badge-warning">{priorityString}</span>
+                            }
+                            {priorityString === 'Low Priority' &&
+                            <span className="badge badge-success">{priorityString}</span>
+                            }
+                            <a className="ml-1" href="#" onClick={onPriorityUp} style={stylePlus}>{iconPlus}</a>
                         </div>
-                        <div className="d-flex pt-1">
-                            <div className="input-group">
+                    </div>
+                    <div className="d-flex pt-1">
+                        <div className="input-group">
                                 <textarea className="md-textarea form-control"
                                           rows="3"
                                           value={name}
                                           onChange={(e) => setName(e.target.value)}
                                           placeholder="Describe your task"
                                 />
-                            </div>
                         </div>
                     </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onClose}>Close</button>
-                        <button type="button" className="btn btn-primary" onClick={onUpdateTask}>Update</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseEditModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={onUpdateTask}>
+                        Update
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };
 

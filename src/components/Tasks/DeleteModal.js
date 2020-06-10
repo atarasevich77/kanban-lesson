@@ -1,46 +1,41 @@
 import React, {useState} from 'react';
+import {Button, Modal} from "react-bootstrap";
 
 const DeleteModal = (props) => {
 
-    const [show, setShow] = useState('show');
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    const getModalStyle = {
-        paddingRight: '17px',
-        display: show ? 'block' : 'none',
-        cursor: 'default'
+    const handleShowDeleteModal = (e) => {
+        setShowDeleteModal(true);
     }
 
-    const onClose = () => {
-        setShow('');
-        props.setShowDeleteModal(false);
-        document.body.classList.remove('modal-open');
+    const handleCloseDeleteModal = (e) => {
+        setShowDeleteModal(false);
     }
 
     const onDeleteTask = () => {
         props.deleteTask(props.task);
-        onClose();
+        setShowDeleteModal(false);
     }
 
     return (
-        <div className={"modal fade " + show} id="deleteModal" tabIndex="-1" role="dialog" aria-hidden={true} style={getModalStyle}>
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">Delete task</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onClose}>
-                            <span aria-hidden={true}>&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        Do you want to delete this task?
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onClose}>Close</button>
-                        <button type="button" className="btn btn-primary" onClick={onDeleteTask}>Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <>
+            <a className="card-link ml-auto" href="#" onClick={handleShowDeleteModal}>Delete</a>
+            <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete task</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Do you want to delete this task?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={onDeleteTask}>
+                        Delete
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };
 
